@@ -2,9 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { ReservationsModule } from './reservations.module';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(ReservationsModule);
+  app.connectMicroservice({transport: Transport.TCP});
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true
   }));
